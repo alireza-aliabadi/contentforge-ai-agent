@@ -1,0 +1,87 @@
+[tool.poetry]
+name = "contentforge-ai-agent"
+version = "0.1.0"
+description = "AI-powered multi-agent content creation platform using external AI APIs"
+authors = ["ContentForge Team"]
+readme = "README.md"
+packages = [{ include = "backend" }]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "^0.115.8"
+uvicorn = { extras = ["standard"], version = "^0.34.0" }
+sqlalchemy = { extras = ["asyncio"], version = "^2.0.36" }
+psycopg = { extras = ["binary", "pool"], version = "^3.2.0" }
+alembic = "^1.14.0"
+pydantic = { extras = ["email"], version = "^2.10.0" }
+pydantic-settings = "^2.6.0"
+python-jose = { extras = ["cryptography"], version = "^3.3.0" }
+passlib = { extras = ["bcrypt"], version = "^1.7.4" }
+bcrypt = "^4.2.0"
+python-multipart = "^0.0.20"
+celery = { extras = ["redis"], version = "^5.4.0" }
+redis = "^5.2.0"
+httpx = "^0.28.0"
+pypdf = "^5.1.0"
+python-docx = "^1.1.2"
+pillow = "^11.0.0"
+numpy = "^2.1.0"
+opentelemetry-api = "^1.28.0"
+opentelemetry-sdk = "^1.28.0"
+opentelemetry-instrumentation-fastapi = "^0.49b0"
+opentelemetry-exporter-otlp = "^1.28.0"
+prometheus-client = "^0.21.0"
+slowapi = "^0.1.9"
+python-dotenv = "^1.0.1"
+aiofiles = "^24.1.0"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.8.0"
+mypy = "^1.13.0"
+pytest = "^8.3.0"
+pytest-asyncio = "^0.24.0"
+pytest-cov = "^6.0.0"
+bandit = "^1.8.0"
+pip-audit = "^2.7.0"
+types-passlib = "^1.7.7"
+types-python-jose = "^3.3.4"
+types-aiofiles = "^25.1.0.20260518"
+
+[tool.poetry.scripts]
+contentforge-api = "backend.main:run"
+
+[build-system]
+requires = ["poetry-core>=2.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+src = ["backend"]
+
+[tool.ruff.lint]
+select = ["E", "F", "B", "SIM", "I", "ASYNC", "S", "UP", "RUF"]
+
+[tool.ruff.lint.per-file-ignores]
+"backend/tests/**" = ["S101", "S105", "S106"]
+"backend/migrations/**" = ["E501"]
+"backend/main.py" = ["S104"]
+"backend/api/schemas.py" = ["S105"]
+
+[tool.mypy]
+python_version = "3.12"
+packages = ["backend"]
+ignore_missing_imports = true
+exclude = ["backend/tests", "backend/migrations"]
+warn_unused_ignores = true
+disallow_untyped_defs = false
+check_untyped_defs = true
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["backend/tests"]
+addopts = "-q --tb=short"
+
+[tool.coverage.run]
+source = ["backend"]
+omit = ["backend/tests/*"]
