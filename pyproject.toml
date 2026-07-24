@@ -3,6 +3,7 @@ name = "contentforge-ai-agent"
 version = "0.1.0"
 description = "AI-powered multi-agent content creation platform using external AI APIs"
 authors = ["ContentForge Team"]
+license = "MIT"
 readme = "README.md"
 packages = [{ include = "backend" }]
 
